@@ -17,7 +17,7 @@ client = gspread.authorize(credentials)
 # sheet_names = client.open("AllDensities").worksheets()
 # sheet_tile = [name.title for name in sheet_names]
 
-sheet_titles = ['WDR (All)', 'LDR (All)', 'UHDR (All)', 'CRC (All)', 'VISNIR Size C', 'VISNIR', 'Sheet13', 'CRC - All, ’HDR-NIR']
+sheet_titles = ['CRC - All Patches', 'HDR-NIR']
 
 for title in sheet_titles:
     sheet = client.open("AllDensities").worksheet(title)
