@@ -8,12 +8,13 @@ from app.parsers.clean_xlsx import CleanXlsx
 
 class Parser_test:
     def __init__(self,db_name, collection_name, file_name):
+        self.file_name = file_name
         #starting connection to DB
         connect = DbConnect(db_name, collection_name)
         self.db, self.client = connect.start_connection()
 
-        df = CleanXlsx(file_name)
-        df = df.clean()
+        self.df = CleanXlsx(self.file_name)
+        self.df = self.df.clean()
 
     def parse(self):
 
@@ -23,6 +24,9 @@ class Parser_test:
         for column in self.df.columns:
 
             if "space_" in column:
+                if not dict_data:
+                    print("dict_emtpy")
+                    continue
 
                 keys = list(dict_data.keys()) #getting the film's layer name
 
@@ -60,6 +64,7 @@ class Parser_test:
                     continue
                 if value:
                     dict_data[column].append(value)
+        print(f"Done uploading file: {self.file_name}")
 
             
 
