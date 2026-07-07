@@ -11,7 +11,7 @@ class CleanXlsx:
         df.dropna(how='all', inplace=True)
         #fills all cells with NaN with empty space
         df = df.fillna("")
-        # Select all columns that contain 'space_' and drop them
-        df = df.drop(columns=df.filter(like='space_').columns)
+        # # Select all columns that contain 'space_' and drop them
+        # df = df.drop(columns=df.filter(like='space_').columns)
         
         return df

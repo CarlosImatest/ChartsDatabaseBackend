@@ -3,8 +3,6 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
 import certifi
-import json
-
 
 # Load the Excel file
 df = pd.read_excel('WDR_clean.xlsx')
