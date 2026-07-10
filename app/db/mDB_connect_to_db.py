@@ -18,7 +18,7 @@ class DbConnect:
         if not self.uri:
             raise ValueError("MONGODB_URI not found in .env")
 
-        print(f"Loaded URI: {self.uri[:40]}...")
+        print(f"Loaded URI: {self.uri[:10]}...")
         print(f"Database  : {self.db_name}")
 
         client = MongoClient(self.uri, tlsCAFile=certifi.where())
@@ -30,4 +30,4 @@ class DbConnect:
         except Exception as e:
             raise Exception(f"Unable to find document: {e}")
         
-        return collection, client
+        return collection, database, client

@@ -8,7 +8,7 @@ user_input = input("enter collection name")
 connect = DbConnect("Charts", user_input)
 
 
-collection, client = connect.start_connection()
+collection, database, client = connect.start_connection()
 
 # delete_many directly on the collection object and returns deleted count
 result = collection.delete_many({})

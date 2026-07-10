@@ -1,6 +1,10 @@
+'''
+This is used for MongoDB document structure for creating a user
+'''
 from beanie import Document
 from pydantic import EmailStr
-from datetime import datetime
+
+from app.common.enums import UserRole
 
 
 class User(Document):
@@ -11,9 +15,9 @@ class User(Document):
 
     hashed_password: str
 
-    role: str
+    role: UserRole
 
-    created_at: datetime = datetime.utcnow()
 
     class Settings:
-        name = "users"
+        #this specifies which collection to insert the user into ChartsDB-->Users-->user
+        name = "user"
