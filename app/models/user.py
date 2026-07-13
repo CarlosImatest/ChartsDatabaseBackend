@@ -1,5 +1,5 @@
 '''
-This is used for MongoDB document structure for creating a user
+This is used for structure for creating a user
 '''
 from beanie import Document
 from pydantic import EmailStr

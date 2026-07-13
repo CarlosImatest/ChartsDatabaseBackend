@@ -1,5 +1,5 @@
 '''
-This is the stucture that the Frontend will use when creating a user
+This is the stucture that the bakcend will use when creating a user
 '''
 
 from pydantic import BaseModel, EmailStr
