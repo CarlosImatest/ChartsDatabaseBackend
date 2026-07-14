@@ -14,7 +14,7 @@ async def create_user_test():
 
 
     user_request = UserCreate(
-        name="Carlos",
+        name="Alex",
         email="carlos@test.com",
         password="SuperSecret123",
         role=UserRole.ENGINEER

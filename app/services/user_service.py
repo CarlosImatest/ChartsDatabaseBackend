@@ -3,20 +3,18 @@ from app.schemas.user import UserCreate
 from app.utils.password import hash_password
 
 
-async def create_user(user: UserCreate):
+class UserService:
 
-    db_user = User(
+    @staticmethod
+    async def create_user(user: UserCreate) -> User:
 
-        name=user.name,
+        db_user = User(
+            name=user.name,
+            email=user.email,
+            hashed_password=hash_password(user.password),
+            role=user.role
+        )
 
-        email=user.email,
+        await db_user.insert()
 
-        hashed_password=hash_password(user.password),
-
-        role=user.role
-
-    )
-
-    await db_user.insert()
-
-    return db_user
+        return db_user

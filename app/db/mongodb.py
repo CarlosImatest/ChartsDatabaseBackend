@@ -3,6 +3,7 @@ from beanie import init_beanie
 
 from app.core.config import settings
 from app.models.user import User
+from app.models.chart import ChartCRC, ChartWDR
 
 
 async def init_database():
@@ -10,11 +11,18 @@ async def init_database():
         settings.mongodb_uri
     )
 
-    database = client[settings.database_name]
+    users_db = client["Users"]
+    charts_db = client["Charts"]
 
     await init_beanie(
-        database=database,
+        database=users_db,
+        document_models=[User]
+    )
+
+    await init_beanie(
+        database=charts_db,
         document_models=[
-            User
+            ChartCRC,
+            ChartWDR
         ]
     )
