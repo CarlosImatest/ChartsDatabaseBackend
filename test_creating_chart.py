@@ -1,6 +1,6 @@
 import asyncio
 
-from app.models.chart import ChartCRC, Layer
+from app.models.chart import ChartCRC_test, Layer
 from app.db.mongodb import init_database
 
 
@@ -10,7 +10,7 @@ async def create_chart_test():
     await init_database()
 
 
-    db_chart = ChartCRC(
+    db_chart = ChartCRC_test(
         name="test insert chart",
         film_type="Fujifilm",
         layers=[

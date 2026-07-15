@@ -3,7 +3,15 @@ from beanie import init_beanie
 
 from app.core.config import settings
 from app.models.user import User
-from app.models.chart import ChartCRC, ChartWDR
+from app.models.chart import (
+    ChartCRC,
+    ChartWDR,
+    ChartVISNIR,
+    ChartLDR,
+    ChartUHDR,
+    ChartCRC_test,
+    ChartWDR_test,
+)
 
 
 async def init_database():
@@ -23,6 +31,11 @@ async def init_database():
         database=charts_db,
         document_models=[
             ChartCRC,
-            ChartWDR
+            ChartWDR,
+            ChartVISNIR,
+            ChartLDR,
+            ChartUHDR,
+            ChartCRC_test,
+            ChartWDR_test,
         ]
     )
