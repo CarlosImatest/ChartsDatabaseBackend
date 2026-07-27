@@ -1,14 +1,11 @@
-'''
-This is the stucture that the bakcend will use when creating a user
-'''
-
 from pydantic import BaseModel, EmailStr
 
 from app.common.enums import UserRole
 
 
 class UserCreate(BaseModel):
-    name: str
+    first_name: str
+    last_name: str
     email: EmailStr
     password: str
     role: UserRole
@@ -16,6 +13,7 @@ class UserCreate(BaseModel):
 
 class UserResponse(BaseModel):
     id: str
-    name: str
+    first_name: str
+    last_name: str
     email: EmailStr
     role: UserRole

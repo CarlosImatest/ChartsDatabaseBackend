@@ -7,14 +7,16 @@ class UserService:
 
     @staticmethod
     async def create_user(user: UserCreate) -> User:
-
         db_user = User(
-            name=user.name,
+            first_name=user.first_name,
+            last_name=user.last_name,
             email=user.email,
             hashed_password=hash_password(user.password),
             role=user.role
         )
-
         await db_user.insert()
-
         return db_user
+
+    @staticmethod
+    async def get_user_by_email(email: str) -> User | None:
+        return await User.find_one(User.email == email)

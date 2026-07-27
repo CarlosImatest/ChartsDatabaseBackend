@@ -2,11 +2,11 @@ from enum import Enum
 
 
 class UserRole(str, Enum):
-    ADMIN = "admin"
-    ENGINEER = "engineer"
     VIEWER = "viewer"
+    EDITOR = "editor"
+    ADMIN = "admin"
 
-#define the chart type database we have
+
 class ChartType(str, Enum):
     CRC = "CRC"
     WDR = "WDR"
