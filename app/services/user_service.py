@@ -13,6 +13,8 @@ class UserService:
             email=user.email,
             hashed_password=hash_password(user.password),
             role=user.role
+            # status defaults to ACTIVE — this is the admin-direct-create
+            # path, which stays exempt from email verification.
         )
         await db_user.insert()
         return db_user

@@ -13,7 +13,7 @@ async def create_first_admin():
         first_name="Carlos",
         last_name="Sanchez",
         email="carlos@imatest.com",
-        hashed_password=hash_password("carlosimatest1"),
+        hashed_password=hash_password(""),
         role=UserRole.ADMIN
     )
 

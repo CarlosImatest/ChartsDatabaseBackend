@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr
 
-from app.common.enums import UserRole
+from app.common.enums import UserRole, UserStatus
 
 
 class UserCreate(BaseModel):
@@ -17,3 +17,4 @@ class UserResponse(BaseModel):
     last_name: str
     email: EmailStr
     role: UserRole
+    status: UserStatus
