@@ -12,8 +12,8 @@ router = APIRouter()
 @router.post("/invites", response_model=InviteResponse)
 async def create_invite(
     payload: InviteCreate,
-    current_user: User = Depends(require_admin)  # only admins can invite
-):
+    current_user: User = Depends(require_admin)
+    ):
     try:
         invite = await InviteService.create_invite(
             payload, created_by=str(current_user.id)

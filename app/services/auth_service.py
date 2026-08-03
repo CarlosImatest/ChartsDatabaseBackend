@@ -61,12 +61,14 @@ class AuthService:
     @staticmethod
     async def verify_email(user: User, code: str) -> bool:
         if user.status == UserStatus.ACTIVE:
-            return True  # already verified, nothing to do
+            return True
 
         if not user.verification_code_hash or not user.verification_code_expires_at:
             return False
 
-        if datetime.now(timezone.utc) > user.verification_code_expires_at:
+        now_naive_utc = datetime.now(timezone.utc).replace(tzinfo=None)
+
+        if now_naive_utc > user.verification_code_expires_at:
             return False
 
         if not verify_code(code, user.verification_code_hash):
