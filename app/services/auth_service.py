@@ -1,3 +1,4 @@
+import resend
 from datetime import datetime, timedelta, timezone
 
 from app.models.user import User
@@ -29,12 +30,6 @@ class AuthService:
 
     @staticmethod
     async def register_with_invite(payload: RegisterWithInviteRequest) -> User:
-        """
-        Redeems an invite: validates it, creates a PENDING_VERIFICATION
-        user with the invite's preset role/email, marks the invite used,
-        and emails a verification code. The invite is consumed even if
-        the user never finishes verifying — they'd need a new invite.
-        """
         invite = await InviteService.get_valid_invite(payload.invite_token)
 
         code = generate_verification_code()
@@ -54,7 +49,18 @@ class AuthService:
 
         await InviteService.mark_used(invite)
 
-        EmailService.send_verification_code(user.email, code, user.first_name)
+        # Same reasoning as invite_service.create_invite: the account
+        # itself is already fully created at this point. If email
+        # delivery fails (e.g. unverified sending domain), we don't
+        # want to crash the whole signup — the account still exists,
+        # the user just needs the code delivered another way (resend
+        # endpoint once domain is fixed, or read from server logs
+        # during local development).
+        try:
+            EmailService.send_verification_code(user.email, code, user.first_name)
+        except resend.exceptions.ResendError as e:
+            print(f"[DEV] Verification code for {user.email}: {code}")
+            print(f"[DEV] Email send failed: {e}")
 
         return user
 
@@ -89,4 +95,9 @@ class AuthService:
             minutes=settings.verification_code_expire_minutes
         )
         await user.save()
-        EmailService.send_verification_code(user.email, code, user.first_name)
+
+        try:
+            EmailService.send_verification_code(user.email, code, user.first_name)
+        except resend.exceptions.ResendError as e:
+            print(f"[DEV] Verification code for {user.email}: {code}")
+            print(f"[DEV] Email send failed: {e}")
