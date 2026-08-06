@@ -84,3 +84,19 @@ async def resend_code(current_user: User = Depends(get_current_user)):
 @router.get("/auth/me", response_model=UserResponse)
 async def get_me(current_user: User = Depends(get_current_user)):
     return _to_response(current_user)
+
+from app.schemas.auth import ChangePasswordRequest
+
+@router.post("/auth/change-password")
+async def change_password(
+    payload: ChangePasswordRequest,
+    current_user: User = Depends(get_current_user)  # any logged-in user, own account only
+):
+    success = await AuthService.change_password(
+        current_user, payload.current_password, payload.new_password
+    )
+
+    if not success:
+        raise HTTPException(status_code=400, detail="Current password is incorrect")
+
+    return {"detail": "Password updated"}

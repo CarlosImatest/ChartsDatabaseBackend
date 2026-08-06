@@ -101,3 +101,16 @@ class AuthService:
         except resend.exceptions.ResendError as e:
             print(f"[DEV] Verification code for {user.email}: {code}")
             print(f"[DEV] Email send failed: {e}")
+
+    @staticmethod
+    async def change_password(user: User, current_password: str, new_password: str) -> bool:
+        """
+        Returns False if current_password doesn't match what's on file —
+        the route turns that into a 400 rather than silently succeeding.
+        """
+        if not verify_password(current_password, user.hashed_password):
+            return False
+
+        user.hashed_password = hash_password(new_password)
+        await user.save()
+        return True
