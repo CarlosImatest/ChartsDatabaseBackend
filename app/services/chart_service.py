@@ -68,3 +68,13 @@ class ChartService:
 
         await db_chart.delete()
         return True
+
+    @staticmethod
+    async def get_chart_by_name(chart_type: ChartType, chart_name: str):
+        model_cls = CHART_MODEL_REGISTRY[chart_type]
+        return await model_cls.find_one(model_cls.name == chart_name)
+
+    # @staticmethod
+    # async def query(chart_type: ChartType, search: Query):
+    #     ChartService.get_chart_by_name()
+    #     return

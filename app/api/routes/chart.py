@@ -34,6 +34,21 @@ async def create_chart(
     return _to_response(db_chart)
 
 
+#had to move get_chart_by_name above get_chart, so that when searching this execute first
+#if not the API runs get_chart and gives an error
+@router.get("/charts/{chart_type}/search", response_model=ChartResponse)
+async def get_chart_by_name(
+    chart_type: ChartType,
+    name: str,
+    current_user: User = Depends(require_viewer),
+):
+    db_chart = await ChartService.get_chart_by_name(chart_type, name)
+
+    if not db_chart:
+        raise HTTPException(status_code=404, detail="Chart not found")
+
+    return _to_response(db_chart)
+
 @router.get("/charts/{chart_type}/{chart_id}", response_model=ChartResponse)
 async def get_chart(
     chart_type: ChartType,
